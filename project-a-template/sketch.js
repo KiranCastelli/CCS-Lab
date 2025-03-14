@@ -47,9 +47,9 @@ function setup() {
     end = false
 }
 
-//function preload() {
-//mySound = loadSound('sound.mp3');
-//}
+function preload() {
+    mySound = loadSound('sound.mp3');
+}
 
 function draw() {
 
@@ -141,7 +141,7 @@ function draw() {
     //RIPPLE FOR NEW DIMENSION
     if (pre == true && newdemen == false) {
         if (i == 0) {
-            //mySound.play()
+            mySound.play()
         }
 
         hit = true;
