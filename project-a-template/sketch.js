@@ -1,7 +1,7 @@
 
 function setup() {
     canvas = createCanvas(800, 500);
-    //canvas.parent("p5-canvas-container")
+    canvas.parent("p5-canvas-container")
     background(0);
     //circle var
     circ = 0;
