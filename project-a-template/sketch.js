@@ -25,6 +25,7 @@ function setup() {
     rippleChance = 0;
     newdemen = false
     pre = false
+    rcolor = 0
 
     //new
     tun = 100
@@ -47,9 +48,9 @@ function setup() {
     end = false
 }
 
-function preload() {
-    mySound = loadSound('sound.mp3');
-}
+//function preload() {
+//mySound = loadSound('sound.mp3');
+//}
 
 function draw() {
 
@@ -141,7 +142,7 @@ function draw() {
     //RIPPLE FOR NEW DIMENSION
     if (pre == true && newdemen == false) {
         if (i == 0) {
-            mySound.play()
+            //mySound.play()
         }
 
         hit = true;
@@ -200,9 +201,13 @@ function ripple() {
 
 
 function d2() {
-
+    let shapex = random(width);
+    let shapey = random(height);
+    let shapesize = random(20, 40);
+    let shapes = shapesize
     shapeChance = int(random(20))
     age += 0.3
+    rcolor = map(rcolor, shapes, 200, 255, 0)
 
     blurry = map(age, 0, 1000, 0, 1)
     age_color = map(age, 0, 1000, 255, 0)
@@ -210,12 +215,12 @@ function d2() {
     tcolor = map(tun, 100, 1000, 0, 255)
     noFill()
     stroke(tcolor)
-    strokeWeight(1)
+    strokeWeight(3)
     circle(tunx, tuny, tun)
     tun += 4
     //go into tunnel
 
-    if (tun > 800) {
+    if (tun > 1000) {
         copy(0, 0, width, height, (width - width - 5), (height - height) - 5, width + 10, height + 10);
         filter(BLUR, blurry)
         if (tun > 800 && age < 1000) {
@@ -298,47 +303,41 @@ function d2() {
             col2 += 1;
         }
 
-        if (shapeChance == 10) {
-            let shape_number = random(5);
-            while (shape_number > 0) {
-                let shapex = random(width);
-                let shapey = random(height);
-                let shapesize = random(10, 20);
-                if (random(1) < 0.5) {
-                    shapex = random(300, 350);
-                }
-                else {
-                    shapex = random(450, 500);
-                }
-                if (random(1) < 0.5) {
-                    shapey = random(150, 200);
-                }
-                else {
-                    shapey = random(300, 350);
-                }
-                noStroke();
-                fill(age_color);
-                square(shapex, shapey, shapesize);
-                shape_number -= 1;
-            }
+
+        shapex = random(0, 800)
+        shapey = random(0, 500)
+        if (shapex + 200 > 800 || shapex - 200 < 0 && shapey + 100 > 500 || shapey - 100 < 0) {
+            noStroke();
+            fill(age_color);
+            square(shapex, shapey, shapesize);
+            shape_number -= 1;
 
 
+
+            stroke(rcolor)
+            noFill()
+            strokeWeight(2)
+            square(shapex, shapey, shapes)
+            shapes += 4
         }
-
-        fill(col2);
-        noStroke();
-        ellipse(x2, y2, 30, 30);
-
-        fill(col2);
-        noStroke();
-        ellipse(x2 - 10, y2 - 10, 30, 30);
-
-        fill(col2);
-        noStroke();
-        ellipse(x2 + 10, y2 + 10, 30, 30);
 
 
     }
+
+    fill(col2);
+    noStroke();
+    ellipse(x2, y2, 30, 30);
+
+    fill(col2);
+    noStroke();
+    ellipse(x2 - 10, y2 - 10, 30, 30);
+
+    fill(col2);
+    noStroke();
+    ellipse(x2 + 10, y2 + 10, 30, 30);
+
+
+
     if (age < 1000) {
         fill(age_color)
         circle(width / 2, height / 2 + 5, 1)
