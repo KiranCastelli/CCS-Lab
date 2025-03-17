@@ -1,7 +1,7 @@
 
 function setup() {
     canvas = createCanvas(800, 500);
-    canvas.parent("p5-canvas-container")
+    //canvas.parent("p5-canvas-container")
     background(0);
     //circle var
     circ = 0;
@@ -26,6 +26,8 @@ function setup() {
     newdemen = false
     pre = false
     rcolor = 0
+    going = false
+    c = 0
 
     //new
     tun = 100
@@ -144,12 +146,13 @@ function draw() {
         if (i == 0) {
             //mySound.play()
         }
-
         hit = true;
         stro = map(i, 0, 20, 0, 255);
         noStroke();
         fill(255);
         circle(width / 2, height / 2, grow);
+        filter(BLUR, 1)
+        copy(0, 0, width, height, (width - width - 3), (height - height) - 3, width + 6, height + 6);
         grow += 20 * rip;
         i += 1;
         if (i > 3) {
@@ -180,7 +183,7 @@ function draw() {
 }
 
 function ripple() {
-
+    filter(BLUR, 1)
     ripx = random(width);
     ripy = random(height);
     grow = 10;
@@ -191,6 +194,7 @@ function ripple() {
     hit = false;
     newdemen = true
     end = false
+    chance = random(5)
 }
 
 
@@ -201,12 +205,18 @@ function ripple() {
 
 
 function d2() {
-    let shapex = random(width);
-    let shapey = random(height);
+
     let shapesize = random(20, 40);
     let shapes = shapesize
-    shapeChance = int(random(20))
-    age += 0.3
+    if (going == false) {
+        shapeChance = int(random(5))
+        shapex = random(width);
+        shapey = random(height);
+        outx = random(0, 800)
+        outy = random(0, 500)
+        c = 0
+    }
+    age += .6
     rcolor = map(rcolor, shapes, 200, 255, 0)
 
     blurry = map(age, 0, 1000, 0, 1)
@@ -218,10 +228,14 @@ function d2() {
     strokeWeight(3)
     circle(tunx, tuny, tun)
     tun += 4
+    if (tun < 1000) {
+        copy(0, 0, width, height, (width - width - .7), (height - height) - .7, width + 1.4, height + 1.4);
+        filter(BLUR, 1)
+    }
     //go into tunnel
 
     if (tun > 1000) {
-        copy(0, 0, width, height, (width - width - 5), (height - height) - 5, width + 10, height + 10);
+        copy(0, 0, width, height, (width - width - 10), (height - height) - 10, width + 20, height + 20);
         filter(BLUR, blurry)
         if (tun > 800 && age < 1000) {
             appear = true
@@ -304,43 +318,37 @@ function d2() {
         }
 
 
-        shapex = random(0, 800)
-        shapey = random(0, 500)
-        if (shapex + 200 > 800 || shapex - 200 < 0 && shapey + 100 > 500 || shapey - 100 < 0) {
-            noStroke();
-            fill(age_color);
-            square(shapex, shapey, shapesize);
-            shape_number -= 1;
 
+        //if (shapeChance == 2){
+        going = true
+        c += 1
+        shapex = lerp(shapex, mouseX, .1)
+        shapey = lerp(shapey, mouseY, .1)
+        noStroke()
+        fill(age_color)
+        circle(shapex, shapey, 3)
+        //if (c == 10){
+        //going = false
+        //}
+        //}
 
+        fill(col2);
+        noStroke();
+        ellipse(x2, y2, 30, 30);
 
-            stroke(rcolor)
-            noFill()
-            strokeWeight(2)
-            square(shapex, shapey, shapes)
-            shapes += 4
-        }
+        fill(col2);
+        noStroke();
+        ellipse(x2 - 10, y2 - 10, 30, 30);
 
+        fill(col2);
+        noStroke();
+        ellipse(x2 + 10, y2 + 10, 30, 30);
 
     }
 
-    fill(col2);
-    noStroke();
-    ellipse(x2, y2, 30, 30);
-
-    fill(col2);
-    noStroke();
-    ellipse(x2 - 10, y2 - 10, 30, 30);
-
-    fill(col2);
-    noStroke();
-    ellipse(x2 + 10, y2 + 10, 30, 30);
-
-
-
     if (age < 1000) {
         fill(age_color)
-        circle(width / 2, height / 2 + 5, 1)
+        circle(width / 2, height / 2 + 12, 1)
     }
     if (age > 1000) {
         fill(255)
@@ -350,11 +358,9 @@ function d2() {
         if (age > 1020) {
             appear = false
         }
-        if (age > 1150) {
+        if (age > 1180) {
             d3 = true
         }
-
-
     }
 
 }
