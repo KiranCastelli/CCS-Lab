@@ -1,15 +1,3 @@
-/*
-  Check our the GOAL and the RULES of this exercise at the bottom of this file.
-  
-  After that, follow these steps before you start coding:
-
-  1. rename the dancer class to reflect your name (line 35).
-  2. adjust line 20 to reflect your dancer's name, too.
-  3. run the code and see if a square (your dancer) appears on the canvas.
-  4. start coding your dancer inside the class that has been prepared for you.
-  5. have fun.
-*/
-
 let dancer;
 
 function setup() {
@@ -18,7 +6,7 @@ function setup() {
   canvas.parent("p5-canvas-container");
 
   // ...except to adjust the dancer's name on the next line:
-  dancer = new ChatGPTDancer(width / 2, height / 2);
+  dancer = new KiranDancer(width / 2, height / 2);
 }
 
 function draw() {
@@ -29,17 +17,13 @@ function draw() {
   dancer.display();
 }
 
-// You only code inside this class.
-// Start by giving the dancer your name, e.g. LeonDancer.
-class ChatGPTDancer {
+class KiranDancer {
   constructor(startX, startY) {
     this.x = startX;
     this.y = startY;
-    // Use a time variable for animations.
     this.timev = 0;
   }
   update() {
-    // Update our time variable with the current frame count.
     this.timev = frameCount;
   }
   display() {
