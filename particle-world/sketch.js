@@ -1,7 +1,7 @@
 // CCLab Mini Project - 9.R Particle World Template
 
-let NUM_OF_PARTICLES = 500; // Decide the initial number of particles.
-let MAX_OF_PARTICLES = 501; // Decide the maximum number of particles.
+let NUM_OF_PARTICLES = 2000; // Decide the initial number of particles.
+let MAX_OF_PARTICLES = 1999; // Decide the maximum number of particles.
 
 let particles = [];
 
@@ -42,7 +42,7 @@ class Particle {
     // properties (variables): particle's characteristics
     this.x = startX;
     this.y = startY;
-    this.dia = random(10);
+    this.dia = random(1);
 
     //color
     this.r = 0
@@ -60,8 +60,14 @@ class Particle {
     this.driftX = noise(.005 * frameCount + this.xR);
     this.driftY = noise(.005 * frameCount + this.yR);
 
-    this.parX = 100 * this.driftX
-    this.parY = 100 * this.driftY
+
+    if (mouseIsPressed) {
+      this.parX = lerp(parX, mouseX, .02)
+      this.parY = lerp(parY, mouseY, .02)
+    } else {
+      this.parX = 100 * this.driftX
+      this.parY = 100 * this.driftY
+    }
   }
   display() {
     // particle's appearance
@@ -80,17 +86,7 @@ class Particle {
     this.b = random(0, 255);
   }
   changeSize() {
-    this.dia = random(10)
+    this.dia = random(1)
   }
 }
 
-function mousePressed() {
-  mouseTargX = mouseX
-  mouseTargY = mouseY
-
-  for (let i = 0; i < particles.length; i++) {
-    p = particles[i]
-    p.changeColor();
-    p.changeSize();
-  }
-}
