@@ -24,7 +24,7 @@ function setup() {
 function draw() {
   for (let i = targets.length - 1; i >= 0; i--) {
     let t = targets[i];
-    t.display();
+    //t.display();
   }
 
   for (let i = particles.length - 1; i >= 0; i--) {
